@@ -50,8 +50,12 @@ new Vue({
 
           var newInput = text1 + this.sanitize(bodyHtml) + text2;
 
-          newInput= this.replaceAll(newInput,'<div><code>', '<div>' + text3);
-          newInput = this.replaceAll(newInput, '</code></div>', text4 + '</div>');
+          newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<pre><div>');
+          newInput = this.replaceAll(newInput, '</div></pre>', '</div></pre>' + text4 );
+
+          //newInput= this.replaceAll(newInput,'<div><code>', '<div>' + text3);
+          //newInput = this.replaceAll(newInput, '</code></div>', text4 + '</div>');
+
           newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div>');
           //newInput = this.replaceAll(newInput, 'Copy code</button>', 'Copy code</button><div class="hideParentDiv"></div>');
           this.input = newInput;
@@ -100,6 +104,22 @@ new Vue({
     }
   }
 });
+
+function replaceAllOL(){
+  var newInput = document.getElementById("inputArea").value;
+  newInput= replaceAll2(newInput,'<ol>', '<ul class = "unordered-list-desc">');
+  newInput= replaceAll2(newInput,'</ol>', '</ul>');
+  document.getElementById("inputArea").value = newInput;
+  navigator.clipboard.writeText(newInput);
+}
+
+function escapeRegExp2(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function replaceAll2(str, find, replace) {
+  return str.replace(new RegExp(escapeRegExp2(find), 'g'), replace);
+}
 
 // String.prototype.replaceAll = function(search, replacement) {
 //   var target = this;

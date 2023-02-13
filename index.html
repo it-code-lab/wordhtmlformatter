@@ -10,7 +10,7 @@
 <!-- partial:index.partial.html -->
 <div id="app">
   <div class="input-area">
-    <textarea v-model="input"
+    <textarea id = "inputArea" v-model="input"
               @paste="handlePaste"
               class="text-area"
               rows="20"
@@ -34,7 +34,11 @@
            v-html="input"
            @click="handleClick"></div>
     </div>
+    
   </div>
+  <br>
+  <!-- <button onclick="replaceAllOL()">All OL to UL</button> -->
+  <input type="button" value="All OL to UL" onclick="replaceAllOL()">
 </div>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js'></script>
