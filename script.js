@@ -31,7 +31,7 @@ new Vue({
         var text2 = '<button class="deleteDiv" onclick="deleteCurrentComponent(this)"></button></div>';  
      
         //start of Code Script Style3
-        var text3 = text2 + '<div  onmousedown="setLastFocusedDivId(this.id)" class="codescript3-desc">';
+        var text3 = text2 + '<div  onmousedown="setLastFocusedDivId(this.id)" class="codescript4-desc">';
         //end of Code Script Style3
         var text4 = '<button class="copyDiv" onclick="copyCurrentComponent(this)">Copy</button><button class="deleteDiv" onclick="deleteCurrentComponent(this)"></button></div>' + text1;
 
@@ -50,13 +50,18 @@ new Vue({
 
           var newInput = text1 + this.sanitize(bodyHtml) + text2;
 
-          newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<pre><div>');
-          newInput = this.replaceAll(newInput, '</div></pre>', '</div></pre>' + text4 );
+          newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<div>');
+          newInput = this.replaceAll(newInput, '</div></pre>', '</div></code></pre>' + text4 );
+
+          //newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<pre><div>');
+          //newInput = this.replaceAll(newInput, '</div></pre>', '</div></pre>' + text4 );
 
           //newInput= this.replaceAll(newInput,'<div><code>', '<div>' + text3);
           //newInput = this.replaceAll(newInput, '</code></div>', text4 + '</div>');
 
-          newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div>');
+
+          newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div><pre><code>');
+          //newInput = this.replaceAll(newInput, 'Copy code</div>', '<div class="hideParentDiv"></div>Copy code</div>');
           //newInput = this.replaceAll(newInput, 'Copy code</button>', 'Copy code</button><div class="hideParentDiv"></div>');
           this.input = newInput;
           navigator.clipboard.writeText(newInput);
