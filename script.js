@@ -112,12 +112,19 @@ new Vue({
 
 function replaceAllOL(){
   var newInput = document.getElementById("inputArea").value;
-  newInput= replaceAll2(newInput,'<ol>', '<ul class = "unordered-list-desc">');
+  newInput= replaceAll2(newInput,'<ol>', '<ul class = "unordered-list-arrow">');
   newInput= replaceAll2(newInput,'</ol>', '</ul>');
   document.getElementById("inputArea").value = newInput;
   navigator.clipboard.writeText(newInput);
 }
 
+function replaceAllLiP(){
+  var newInput = document.getElementById("inputArea").value;
+  newInput= replaceAll2(newInput,'<li><p>', '<li>');
+  newInput= replaceAll2(newInput,'</p></li>', '</li>');
+  document.getElementById("inputArea").value = newInput;
+  navigator.clipboard.writeText(newInput);
+}
 function escapeRegExp2(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
