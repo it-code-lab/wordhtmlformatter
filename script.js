@@ -125,6 +125,20 @@ function replaceAllLiP(){
   document.getElementById("inputArea").value = newInput;
   navigator.clipboard.writeText(newInput);
 }
+
+function addBrWithAns(){
+  var newInput = document.getElementById("inputArea").value;
+  newInput= replaceAll2(newInput,'Answer:', '<br>Answer:');
+  document.getElementById("inputArea").value = newInput;
+  navigator.clipboard.writeText(newInput);
+}
+
+function addBrBtLI(){
+  var newInput = document.getElementById("inputArea").value;
+  newInput= replaceAll2(newInput,'</li><li>', '</li><br><li>');
+  document.getElementById("inputArea").value = newInput;
+  navigator.clipboard.writeText(newInput);
+}
 function escapeRegExp2(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
