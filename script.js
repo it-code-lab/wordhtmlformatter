@@ -25,14 +25,14 @@ new Vue({
         // clean it and insert it manually
 
         //Start of paragraph2
-        var text1 = '<div  onmousedown="setLastFocusedDivId(this.id)" class="paragraph2-desc">';
+        var text1 = '<div id="paragraph2-randomid" onmousedown="setLastFocusedDivId(this.id)" class="paragraph2-desc">';
         
         //End of paragraph2
         var text2 = '<button class="deleteDiv" onclick="deleteCurrentComponent(this)"></button></div>';  
      
-        //start of Code Script Style3
-        var text3 = text2 + '<div  onmousedown="setLastFocusedDivId(this.id)" class="codescript4-desc">';
-        //end of Code Script Style3
+        //start of Code Script Style4
+        var text3 = text2 + '<div  id="codescript4-randomid" onmousedown="setLastFocusedDivId(this.id)" class="codescript4-desc">';
+        //end of Code Script Style4
         var text4 = '<button class="copyDiv" onclick="copyCurrentComponent(this)">Copy</button><button class="deleteDiv" onclick="deleteCurrentComponent(this)"></button></div>' + text1;
 
         
@@ -43,15 +43,15 @@ new Vue({
           const bodyRegex = /<body>([\s\S]*)<\/body>/g;
           const matches = bodyRegex.exec(inputHtml);
           const bodyHtml = matches ? matches[1] : inputHtml;
-          const textarea = e.target;
+          //const textarea = e.target;
           // Get current selection and compute the new value
-          const startPos = textarea.selectionStart;
-          const endPos = textarea.selectionEnd;
+          //const startPos = textarea.selectionStart;
+          //const endPos = textarea.selectionEnd;
 
-          var newInput = text1 + this.sanitize(bodyHtml) + text2;
+          var newInput = text1.replace("randomid", this.getRndInt(100000,999999)) + this.sanitize(bodyHtml) + text2;
 
-          newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<div>');
-          newInput = this.replaceAll(newInput, '</div></pre>', '</div></code></pre>' + text4 );
+          newInput= this.replaceAllWithRandomId(newInput,'<pre><div>', text3 + '<div>');
+          newInput = this.replaceAllWithRandomId(newInput, '</div></pre>', '</div></code></pre>' + text4 );
 
           //newInput= this.replaceAll(newInput,'<pre><div>', text3 + '<pre><div>');
           //newInput = this.replaceAll(newInput, '</div></pre>', '</div></pre>' + text4 );
@@ -106,6 +106,24 @@ new Vue({
     },
     replaceAll(str, find, replace) {
       return str.replace(new RegExp(this.escapeRegExp(find), 'g'), replace);
+    },
+    // Not working as expected
+    // replaceAllWithRandomIdRgx(str, find, replace) {
+    //   return str.replace(new RegExp(this.escapeRegExp(find), 'g'), replace.replace("randomid", this.getRndInt(100000,999999)));
+    // },
+    replaceAllWithRandomId(inputString, oldStr, newStr)   {
+      while (inputString.indexOf(oldStr) >= 0)
+      {
+          //inputString = inputString.replace(oldStr, newStr);
+          updatedNewStr = newStr.replace("randomid", this.getRndInt(100000,999999));
+          console.log(updatedNewStr);
+          inputString = inputString.replace(oldStr, updatedNewStr);
+      }
+
+    return inputString;
+    },
+    getRndInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
   }
 });
@@ -139,6 +157,20 @@ function addBrBtLI(){
   document.getElementById("inputArea").value = newInput;
   navigator.clipboard.writeText(newInput);
 }
+
+function multiPartRespUpd(){
+  //Start of paragraph2
+  var text1 = '<div id="paragraph2-randomid" onmousedown="setLastFocusedDivId(this.id)" class="paragraph2-desc">';
+
+  //End of paragraph2
+  var text2 = '<button class="deleteDiv" onclick="deleteCurrentComponent(this)"></button></div>';  
+
+  var newInput = document.getElementById("inputArea").value;
+  newInput= replaceAllWithRandomId2(newInput,'</div></div></div></div></div><div>', text2 + '</div></div></div></div></div>' + text1 + '<div>');
+  document.getElementById("inputArea").value = newInput;
+  navigator.clipboard.writeText(newInput);
+}
+
 function escapeRegExp2(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
@@ -147,6 +179,23 @@ function replaceAll2(str, find, replace) {
   return str.replace(new RegExp(escapeRegExp2(find), 'g'), replace);
 }
 
+//Not working as expected
+// function replaceAllWithRandomIdRgx2(str, find, replace) {
+//   return str.replace(new RegExp(this.escapeRegExp2(find), 'g'), replace.replace("randomid", this.getRndInt2(100000,999999)));
+// }
+
+function replaceAllWithRandomId2(inputString, oldStr, newStr) 
+{
+    while (inputString.indexOf(oldStr) >= 0)
+    {
+        inputString = inputString.replace(oldStr, newStr.replace("randomid", getRndInt2(100000,999999)));
+    }
+    return inputString;
+}
+
+function getRndInt2(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
 // String.prototype.replaceAll = function(search, replacement) {
 //   var target = this;
 //   return target.replace(new RegExp(search, 'g'), replacement);
